@@ -223,19 +223,10 @@ export function MeepleHunt({ onCatch, autoSpawnDelay = [22000, 45000] }) {
   );
 }
 
-// Modal: recompensa al cazar al meeple.
+// Modal: recompensa al cazar al meeple (easter egg, sin premio real).
 export function MeepleEgg({ open, onClose }) {
   const { lang } = useI18n();
-  const [copied, setCopied] = useState(false);
   if (!open) return null;
-  const code = "MEEPLE26";
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(code);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {}
-  };
   return (
     <div className="meeple-backdrop" onClick={onClose}>
       <div className="meeple-card" onClick={(e) => e.stopPropagation()}>
@@ -256,13 +247,9 @@ export function MeepleEgg({ open, onClose }) {
         <h3>{lang === "es" ? "¡Cazaste al meeple perdido!" : "You caught the lost meeple!"}</h3>
         <p>
           {lang === "es"
-            ? "Andaba escapado por la landing. Lo devolvemos a la mesa con un detalle para ti: un mes de cuota gratis al hacerte socio."
-            : "It had escaped across the landing. Bring it back to the table — and we'll give you one month of membership for free."}
+            ? "Estaba escapado por la landing. Gracias por devolverlo a su mesa."
+            : "It had escaped across the landing. Thanks for bringing it back to its table."}
         </p>
-        <div className="meeple-code">
-          <span>{code}</span>
-          <button onClick={copy}>{copied ? (lang === "es" ? "¡Copiado!" : "Copied!") : (lang === "es" ? "Copiar" : "Copy")}</button>
-        </div>
         <button className="meeple-close" onClick={onClose}>
           {lang === "es" ? "Cerrar" : "Close"}
         </button>
